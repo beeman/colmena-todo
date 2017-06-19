@@ -1,0 +1,24 @@
+{
+  "name": "@colmena/module-api-starter",
+  "version": "0.0.0",
+  "license": "MIT",
+  "dependencies": {},
+  "colmena": {
+    "module": {
+      "modelSources": [
+        "common/models"
+      ],
+      "models": {
+        "Starter": {
+          "dataSource": "db"
+        },
+        "StarterItem": {
+          "dataSource": "db"
+        }
+      },
+      "sampleData": [
+        "sample-data/sample-data.json"
+      ]
+    }
+  }
+}

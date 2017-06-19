@@ -1,0 +1,44 @@
+{
+  "name": "@colmena/starter",
+  "version": "0.0.0",
+  "description": "Colmena Starter Kit",
+  "license": "MIT",
+  "author": "Bram Borggreve <bram@colmena.io>",
+  "url": "https://github.com/colmena/colmena-starter",
+  "homepage": "https://github.com/colmena/colmena-starter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colmena/colmena-starter"
+  },
+  "bugs": {
+    "url": "https://github.com/colmena/colmena-starter/issues"
+  },
+  "keywords": [
+    "colmena",
+    "starter",
+    "cms",
+    "mobile",
+    "backend",
+    "loopback",
+    "angular",
+    "admin"
+  ],
+  "devDependencies": {
+    "@angular/animations": "4.2.3",
+    "@angular/common": "4.2.3",
+    "@angular/core": "4.2.3",
+    "@angular/forms": "4.2.3",
+    "@angular/http": "4.2.3",
+    "@angular/router": "4.2.3",
+    "@ngrx/core": "1.2.0",
+    "@ngrx/effects": "2.0.3",
+    "@ngrx/store": "2.2.2",
+    "codelyzer": "3.0.1",
+    "core-js": "2.4.1",
+    "lerna": "2.0.0-rc.5",
+    "rxjs": "5.4.1",
+    "tslint": "5.4.3",
+    "typescript": "2.3.4",
+    "zone.js": "0.8.12"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "StarterItem",
+  "plural": "StarterItems",
+  "description": "Starter: Manage Items",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "forceId": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "String",
+      "id": true
+    },
+    "name": {
+      "type": "String"
+    },
+    "description": {
+      "type": "String"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
