@@ -1,7 +1,7 @@
 {
-  "name": "StarterItem",
-  "plural": "StarterItems",
-  "description": "Starter: Manage Items",
+  "name": "Todo",
+  "plural": "Todos",
+  "description": "Todo: Manage Todo Items",
   "base": "PersistedModel",
   "idInjection": true,
   "forceId": false,
@@ -13,11 +13,11 @@
       "type": "String",
       "id": true
     },
-    "name": {
+    "title": {
       "type": "String"
     },
-    "description": {
-      "type": "String"
+    "done": {
+      "type": "Boolean"
     }
   },
   "validations": [],

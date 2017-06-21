@@ -1,5 +1,5 @@
 {
-  "name": "@colmena/module-admin-starter",
+  "name": "@beeman/module-admin-todo",
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {

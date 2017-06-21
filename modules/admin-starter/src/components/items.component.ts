@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
+import { UiService } from '@colmena/admin-ui'
 
-import { StarterService } from '../starter.service'
+import { TodoService } from '../todo.service'
 
 @Component({
   selector: 'app-items',
@@ -14,25 +15,36 @@ export class ItemsComponent {
     class: 'table table-bordered table-stripes',
     columns: [
       { label: 'Name', field: 'name' },
-      { label: 'Description', field: 'description' },
+      { label: 'Done', field: 'done' },
     ],
     rowButtons: [
-      { typeName: 'log', label: 'Log'}
+      { typeName: 'toggle', label: 'Toggle'}
     ]
   }
   public items = []
 
-  constructor(private service: StarterService) {}
+  constructor(
+    private service: TodoService,
+    private uiService: UiService,
+  ) {}
 
   ngOnInit() {
+    this.getItems()
+  }
+
+  getItems() {
     this.service.getItems()
       .subscribe(res => this.items = res)
   }
 
   handleAction($event) {
     switch ($event.type) {
-      case 'log':
-        return console.log($event.payload)
+      case 'toggle':
+        return this.service.toggleItem($event.payload)
+          .subscribe(
+            (res: any) => this.uiService.alertInfo({ title: 'Success', text: `Todo ${res.id} set to ${res.done}`}),
+            err => this.uiService.alertError({ title: 'Failed', text: err }),
+          )
       default:
         console.log('Unknown action: ', $event)
     }

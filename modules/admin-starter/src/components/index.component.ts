@@ -4,7 +4,7 @@ import { UiTabLink } from '@colmena/admin-ui'
 @Component({
   selector: 'app-dashboard',
   template: `
-    <ui-page [tabs]="tabs" title="Colmena Starter">
+    <ui-page [tabs]="tabs" title="Todo">
       <router-outlet></router-outlet>
     </ui-page>
   `,
@@ -12,9 +12,7 @@ import { UiTabLink } from '@colmena/admin-ui'
 export class IndexComponent {
 
   public tabs: UiTabLink[] = [
-    { icon: 'icon-speedometer', title: 'Dashboard', link: 'index' },
     { icon: 'icon-list', title: 'Items', link: 'items' },
-    { icon: 'icon-info', title: 'About', link: 'about' },
   ]
 
 }

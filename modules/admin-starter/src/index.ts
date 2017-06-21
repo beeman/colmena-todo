@@ -1,2 +1,2 @@
-export * from './starter.module'
-export * from './starter-config.module'
+export * from './todo.module'
+export * from './todo-config.module'

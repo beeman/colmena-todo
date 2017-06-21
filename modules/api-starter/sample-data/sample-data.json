@@ -1,19 +1,24 @@
 {
-  "StarterItem": [
+  "Todo": [
     {
       "id": "1",
-      "name": "Item 1",
-      "description": "This is Item 1"
+      "name": "Eat",
+      "done": false
     },
     {
       "id": "2",
-      "name": "Item 2",
-      "description": "This is Item 2"
+      "name": "Sleep",
+      "done": true
     },
     {
       "id": "3",
-      "name": "Item 3",
-      "description": "This is Item 3"
+      "name": "Code",
+      "done": false
+    },
+    {
+      "id": "4",
+      "name": "Repeat",
+      "done": false
     }
   ]
 }

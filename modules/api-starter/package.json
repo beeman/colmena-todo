@@ -1,5 +1,5 @@
 {
-  "name": "@colmena/module-api-starter",
+  "name": "@beeman/module-api-todo",
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {},
@@ -9,10 +9,7 @@
         "common/models"
       ],
       "models": {
-        "Starter": {
-          "dataSource": "db"
-        },
-        "StarterItem": {
+        "Todo": {
           "dataSource": "db"
         }
       },
