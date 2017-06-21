@@ -1,6 +1,6 @@
 {
   "name": "@beeman/module-admin-todo",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
     "@colmena/admin-lb-sdk": "0.0.0",

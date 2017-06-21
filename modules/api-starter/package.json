@@ -1,8 +1,7 @@
 {
   "name": "@beeman/module-api-todo",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
-  "dependencies": {},
   "colmena": {
     "module": {
       "modelSources": [
