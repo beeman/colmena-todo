@@ -2,6 +2,7 @@
   "name": "@beeman/module-admin-todo",
   "version": "0.0.1",
   "license": "MIT",
+  "private": false,
   "dependencies": {
     "@colmena/admin-lb-sdk": "0.0.0",
     "@colmena/admin-ui": "0.0.0"
