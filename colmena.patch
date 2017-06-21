@@ -1,0 +1,185 @@
+diff --git a/apps/admin/package.json b/apps/admin/package.json
+index b22ca94..8b554b5 100644
+--- a/apps/admin/package.json
++++ b/apps/admin/package.json
+@@ -41,6 +41,7 @@
+     "@angular/platform-browser": "4.2.3",
+     "@angular/platform-browser-dynamic": "4.2.3",
+     "@angular/router": "4.2.3",
++    "@beeman/module-admin-todo": "0.0.0",
+     "@colmena/admin-layout": "0.0.0",
+     "@colmena/admin-lb-sdk": "0.0.0",
+     "@colmena/admin-ui": "0.0.0",
+diff --git a/apps/admin/src/app/extensions-routing.module.ts b/apps/admin/src/app/extensions-routing.module.ts
+index 29c784b..e118505 100644
+--- a/apps/admin/src/app/extensions-routing.module.ts
++++ b/apps/admin/src/app/extensions-routing.module.ts
+@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core'
+ import { Routes, RouterModule } from '@angular/router'
+ 
+ const routes: Routes = [
+-// { path: '', loadChildren: '@colmena/module-admin-starter#StarterModule' },
++  { path: '', loadChildren: '@beeman/module-admin-todo#TodoModule' },
+ ]
+ 
+ @NgModule({
+diff --git a/apps/admin/src/app/extensions.module.ts b/apps/admin/src/app/extensions.module.ts
+index 24baa2c..08af44a 100644
+--- a/apps/admin/src/app/extensions.module.ts
++++ b/apps/admin/src/app/extensions.module.ts
+@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core'
+ 
+ import { ExtensionsRoutingModule } from './extensions-routing.module'
+ 
+-// import { StarterConfigModule } from '@colmena/module-admin-starter'
++import { TodoConfigModule } from '@beeman/module-admin-todo'
+ 
+ @NgModule({
+   imports: [
+     ExtensionsRoutingModule,
+ 
+-    // StarterConfigModule
++    TodoConfigModule
+   ],
+ })
+ export class ExtensionsModule {}
+diff --git a/apps/api/config/default.yaml b/apps/api/config/default.yaml
+index 317dfa5..0e8bb45 100644
+--- a/apps/api/config/default.yaml
++++ b/apps/api/config/default.yaml
+@@ -11,6 +11,7 @@ admin:
+ 
+ colmena:
+   modules:
++    '@beeman/module-api-todo': true
+     '@colmena/module-api-content': true
+     '@colmena/module-api-storage': true
+     '@colmena/module-api-system': true
+diff --git a/apps/api/package.json b/apps/api/package.json
+index 7fb4768..2f54166 100644
+--- a/apps/api/package.json
++++ b/apps/api/package.json
+@@ -34,6 +34,7 @@
+   },
+   "main": "server/server.js",
+   "dependencies": {
++    "@beeman/module-api-todo": "0.0.0",
+     "@colmena/api-explorer-style": "0.0.0",
+     "@colmena/api-helpers": "0.0.0",
+     "@colmena/logger": "0.0.0",
+diff --git a/packages/admin-lb-sdk/src/index.ts b/packages/admin-lb-sdk/src/index.ts
+index e342c97..50900cf 100644
+--- a/packages/admin-lb-sdk/src/index.ts
++++ b/packages/admin-lb-sdk/src/index.ts
+@@ -49,13 +49,14 @@ import { SocketDriver } from './sockets/socket.driver';
+ import { SocketConnection } from './sockets/socket.connections';
+ import { RealTime } from './services/core/real.time';
+ import { EmailApi } from './services/custom/Email';
+-import { StorageContainerApi } from './services/custom/StorageContainer';
+-import { SystemApi } from './services/custom/System';
++import { TodoApi } from './services/custom/Todo';
+ import { ContentEventApi } from './services/custom/ContentEvent';
+ import { ContentPageApi } from './services/custom/ContentPage';
+ import { ContentProductApi } from './services/custom/ContentProduct';
+ import { ContentPostApi } from './services/custom/ContentPost';
++import { StorageContainerApi } from './services/custom/StorageContainer';
+ import { StorageFileApi } from './services/custom/StorageFile';
++import { SystemApi } from './services/custom/System';
+ import { SystemDomainApi } from './services/custom/SystemDomain';
+ import { SystemSettingApi } from './services/custom/SystemSetting';
+ import { SystemUserApi } from './services/custom/SystemUser';
+@@ -93,13 +94,14 @@ export class SDKBrowserModule {
+         SDKModels,
+         RealTime,
+         EmailApi,
+-        StorageContainerApi,
+-        SystemApi,
++        TodoApi,
+         ContentEventApi,
+         ContentPageApi,
+         ContentProductApi,
+         ContentPostApi,
++        StorageContainerApi,
+         StorageFileApi,
++        SystemApi,
+         SystemDomainApi,
+         SystemSettingApi,
+         SystemUserApi,
+diff --git a/packages/admin-lb-sdk/src/models/index.ts b/packages/admin-lb-sdk/src/models/index.ts
+index c02bd21..19d5c1c 100644
+--- a/packages/admin-lb-sdk/src/models/index.ts
++++ b/packages/admin-lb-sdk/src/models/index.ts
+@@ -1,12 +1,13 @@
+ /* tslint:disable */
+ export * from './Email';
+-export * from './StorageContainer';
+-export * from './System';
++export * from './Todo';
+ export * from './ContentEvent';
+ export * from './ContentPage';
+ export * from './ContentProduct';
+ export * from './ContentPost';
++export * from './StorageContainer';
+ export * from './StorageFile';
++export * from './System';
+ export * from './SystemDomain';
+ export * from './SystemSetting';
+ export * from './SystemUser';
+diff --git a/packages/admin-lb-sdk/src/services/custom/SDKModels.ts b/packages/admin-lb-sdk/src/services/custom/SDKModels.ts
+index 2ff6306..7548e9e 100644
+--- a/packages/admin-lb-sdk/src/services/custom/SDKModels.ts
++++ b/packages/admin-lb-sdk/src/services/custom/SDKModels.ts
+@@ -1,13 +1,14 @@
+ /* tslint:disable */
+ import { Injectable } from '@angular/core';
+ import { Email } from '../../models/Email';
+-import { StorageContainer } from '../../models/StorageContainer';
+-import { System } from '../../models/System';
++import { Todo } from '../../models/Todo';
+ import { ContentEvent } from '../../models/ContentEvent';
+ import { ContentPage } from '../../models/ContentPage';
+ import { ContentProduct } from '../../models/ContentProduct';
+ import { ContentPost } from '../../models/ContentPost';
++import { StorageContainer } from '../../models/StorageContainer';
+ import { StorageFile } from '../../models/StorageFile';
++import { System } from '../../models/System';
+ import { SystemDomain } from '../../models/SystemDomain';
+ import { SystemSetting } from '../../models/SystemSetting';
+ import { SystemUser } from '../../models/SystemUser';
+@@ -21,13 +22,14 @@ export class SDKModels {
+ 
+   private models: Models = {
+     Email: Email,
+-    StorageContainer: StorageContainer,
+-    System: System,
++    Todo: Todo,
+     ContentEvent: ContentEvent,
+     ContentPage: ContentPage,
+     ContentProduct: ContentProduct,
+     ContentPost: ContentPost,
++    StorageContainer: StorageContainer,
+     StorageFile: StorageFile,
++    System: System,
+     SystemDomain: SystemDomain,
+     SystemSetting: SystemSetting,
+     SystemUser: SystemUser,
+diff --git a/packages/admin-lb-sdk/src/services/custom/index.ts b/packages/admin-lb-sdk/src/services/custom/index.ts
+index fa227c7..ca6d777 100644
+--- a/packages/admin-lb-sdk/src/services/custom/index.ts
++++ b/packages/admin-lb-sdk/src/services/custom/index.ts
+@@ -1,12 +1,13 @@
+ /* tslint:disable */
+ export * from './Email';
+-export * from './StorageContainer';
+-export * from './System';
++export * from './Todo';
+ export * from './ContentEvent';
+ export * from './ContentPage';
+ export * from './ContentProduct';
+ export * from './ContentPost';
++export * from './StorageContainer';
+ export * from './StorageFile';
++export * from './System';
+ export * from './SystemDomain';
+ export * from './SystemSetting';
+ export * from './SystemUser';
